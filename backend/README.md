@@ -68,3 +68,153 @@ Example:
     "message": "Internal Server Error"
   }
   ```
+
+# User Login Endpoint
+
+## POST /users/login
+
+### Description
+This endpoint is used to authenticate a user. It validates the input data and returns a JWT token if the credentials are correct.
+
+### Request Body
+The request body should be a JSON object containing the following fields:
+
+- `email` (string, required, must be a valid email)
+- `password` (string, required, minimum 6 characters)
+
+Example:
+```json
+{
+  "email": "john.doe@example.com",
+  "password": "password123"
+}
+```
+
+### Responses
+
+#### Success
+- **Status Code**: `200 OK`
+- **Body**:
+  ```json
+  {
+    "token": "jwt_token",
+    "user": {
+      "_id": "user_id",
+      "fullname": {
+        "firstname": "John",
+        "lastname": "Doe"
+      },
+      "email": "john.doe@example.com"
+    }
+  }
+  ```
+
+#### Validation Errors
+- **Status Code**: `400 Bad Request`
+- **Body**:
+  ```json
+  {
+    "errors": [
+      {
+        "msg": "Error message",
+        "param": "field_name",
+        "location": "body"
+      }
+    ]
+  }
+  ```
+
+#### Authentication Errors
+- **Status Code**: `401 Unauthorized`
+- **Body**:
+  ```json
+  {
+    "message": "Invalid credentials"
+  }
+  ```
+
+#### Server Errors
+- **Status Code**: `500 Internal Server Error`
+- **Body**:
+  ```json
+  {
+    "message": "Internal Server Error"
+  }
+  ```
+
+# User Profile Endpoint
+
+## GET /users/profile
+
+### Description
+This endpoint is used to get the profile of the authenticated user.
+
+### Responses
+
+#### Success
+- **Status Code**: `200 OK`
+- **Body**:
+  ```json
+  {
+    "_id": "user_id",
+    "fullname": {
+      "firstname": "John",
+      "lastname": "Doe"
+    },
+    "email": "john.doe@example.com"
+  }
+  ```
+
+#### Authentication Errors
+- **Status Code**: `401 Unauthorized`
+- **Body**:
+  ```json
+  {
+    "message": "Unauthorized"
+  }
+  ```
+
+#### Server Errors
+- **Status Code**: `500 Internal Server Error`
+- **Body**:
+  ```json
+  {
+    "message": "Internal Server Error"
+  }
+  ```
+
+# User Logout Endpoint
+
+## GET /users/logout
+
+### Description
+This endpoint is used to log out the authenticated user. It clears the authentication token.
+
+### Responses
+
+#### Success
+- **Status Code**: `200 OK`
+- **Body**:
+  ```json
+  {
+    "message": "Logged out successfully"
+  }
+  ```
+
+#### Authentication Errors
+- **Status Code**: `401 Unauthorized`
+- **Body**:
+  ```json
+  {
+    "message": "Unauthorized"
+  }
+  ```
+
+#### Server Errors
+- **Status Code**: `500 Internal Server Error`
+- **Body**:
+  ```json
+  {
+    "message": "Internal Server Error"
+  }
+  ```
