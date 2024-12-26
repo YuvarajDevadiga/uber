@@ -218,3 +218,91 @@ This endpoint is used to log out the authenticated user. It clears the authentic
     "message": "Internal Server Error"
   }
   ```
+
+# Captain Registration Endpoint
+
+## POST /captains/register
+
+### Description
+This endpoint is used to register a new captain. It validates the input data and creates a new captain in the database.
+
+### Request Body
+The request body should be a JSON object containing the following fields:
+
+- `fullname`: An object containing:
+  - `firstname` (string, required, minimum 3 characters)
+  - `lastname` (string, optional, minimum 3 characters)
+- `email` (string, required, must be a valid email)
+- `password` (string, required, minimum 6 characters)
+- `vehicle`: An object containing:
+  - `color` (string, required, minimum 3 characters)
+  - `plate` (string, required, minimum 3 characters)
+  - `capacity` (number, required, minimum 1)
+  - `vehicleType` (string, required, must be one of `car`, `motorcycle`, `auto`)
+
+Example:
+```json
+{
+  "fullname": {
+    "firstname": "Jane",
+    "lastname": "Doe"
+  },
+  "email": "jane.doe@example.com",
+  "password": "password123",
+  "vehicle": {
+    "color": "Red",
+    "plate": "XYZ123",
+    "capacity": 4,
+    "vehicleType": "car"
+  }
+}
+```
+
+### Responses
+
+#### Success
+- **Status Code**: `201 Created`
+- **Body**:
+  ```json
+  {
+    "token": "jwt_token",
+    "captain": {
+      "_id": "captain_id",
+      "fullname": {
+        "firstname": "Jane",
+        "lastname": "Doe"
+      },
+      "email": "jane.doe@example.com",
+      "vehicle": {
+        "color": "Red",
+        "plate": "XYZ123",
+        "capacity": 4,
+        "vehicleType": "car"
+      }
+    }
+  }
+  ```
+
+#### Validation Errors
+- **Status Code**: `400 Bad Request`
+- **Body**:
+  ```json
+  {
+    "errors": [
+      {
+        "msg": "Error message",
+        "param": "field_name",
+        "location": "body"
+      }
+    ]
+  }
+  ```
+
+#### Server Errors
+- **Status Code**: `500 Internal Server Error`
+- **Body**:
+  ```json
+  {
+    "message": "Internal Server Error"
+  }
+  ```
