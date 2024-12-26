@@ -306,3 +306,167 @@ Example:
     "message": "Internal Server Error"
   }
   ```
+
+# Captain Login Endpoint
+
+## POST /captains/login
+
+### Description
+This endpoint is used to authenticate a captain. It validates the input data and returns a JWT token if the credentials are correct.
+
+### Request Body
+The request body should be a JSON object containing the following fields:
+
+- `email` (string, required, must be a valid email)
+- `password` (string, required, minimum 6 characters)
+
+Example:
+```json
+{
+  "email": "jane.doe@example.com",
+  "password": "password123"
+}
+```
+
+### Responses
+
+#### Success
+- **Status Code**: `200 OK`
+- **Body**:
+  ```json
+  {
+    "token": "jwt_token",
+    "captain": {
+      "_id": "captain_id",
+      "fullname": {
+        "firstname": "Jane",
+        "lastname": "Doe"
+      },
+      "email": "jane.doe@example.com",
+      "vehicle": {
+        "color": "Red",
+        "plate": "XYZ123",
+        "capacity": 4,
+        "vehicleType": "car"
+      }
+    }
+  }
+  ```
+
+#### Validation Errors
+- **Status Code**: `400 Bad Request`
+- **Body**:
+  ```json
+  {
+    "errors": [
+      {
+        "msg": "Error message",
+        "param": "field_name",
+        "location": "body"
+      }
+    ]
+  }
+  ```
+
+#### Authentication Errors
+- **Status Code**: `401 Unauthorized`
+- **Body**:
+  ```json
+  {
+    "message": "Invalid credentials"
+  }
+  ```
+
+#### Server Errors
+- **Status Code**: `500 Internal Server Error`
+- **Body**:
+  ```json
+  {
+    "message": "Internal Server Error"
+  }
+  ```
+
+# Captain Profile Endpoint
+
+## GET /captains/profile
+
+### Description
+This endpoint is used to get the profile of the authenticated captain.
+
+### Responses
+
+#### Success
+- **Status Code**: `200 OK`
+- **Body**:
+  ```json
+  {
+    "captain": {
+      "_id": "captain_id",
+      "fullname": {
+        "firstname": "Jane",
+        "lastname": "Doe"
+      },
+      "email": "jane.doe@example.com",
+      "vehicle": {
+        "color": "Red",
+        "plate": "XYZ123",
+        "capacity": 4,
+        "vehicleType": "car"
+      }
+    }
+  }
+  ```
+
+#### Authentication Errors
+- **Status Code**: `401 Unauthorized`
+- **Body**:
+  ```json
+  {
+    "message": "Unauthorized"
+  }
+  ```
+
+#### Server Errors
+- **Status Code**: `500 Internal Server Error`
+- **Body**:
+  ```json
+  {
+    "message": "Internal Server Error"
+  }
+  ```
+
+# Captain Logout Endpoint
+
+## GET /captains/logout
+
+### Description
+This endpoint is used to log out the authenticated captain. It clears the authentication token.
+
+### Responses
+
+#### Success
+- **Status Code**: `200 OK`
+- **Body**:
+  ```json
+  {
+    "message": "Logged out successfully"
+  }
+  ```
+
+#### Authentication Errors
+- **Status Code**: `401 Unauthorized`
+- **Body**:
+  ```json
+  {
+    "message": "Unauthorized"
+  }
+  ```
+
+#### Server Errors
+- **Status Code**: `500 Internal Server Error`
+- **Body**:
+  ```json
+  {
+    "message": "Internal Server Error"
+  }
+  ```
