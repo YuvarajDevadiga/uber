@@ -25,8 +25,7 @@ router.post(
       .withMessage("Capacity must be at least 1"),
     body("vehicle.vehicleType")
       .isIn(["car", "motorcycle", "auto"])
-      .withMessage("Invalid vehicle type")
-      .withMessage("Color must be at least 3 characters long"),
+      .withMessage("Invalid vehicle type"),
   ],
   captainController.registerCaptain
 );
